@@ -1,24 +1,41 @@
 students = []
 
+
 def add_student():
     print("\n🟢 ADD NEW STUDENT")
 
+    # 🔹 ID must be integer & unique
     sid = input("Student ID   : ")
+    if not sid.isdigit():
+        print("❌ Student ID must be an integer!")
+        return
 
-    # 🔒 UNIQUE ID CHECK LOGIC
+    sid = int(sid)
+
     for s in students:
         if s["id"] == sid:
             print("❌ Student ID already exists! Please enter a unique ID.")
             return
 
-    name = input("Student Name : ")
-
-    if name.strip() == "":
-        print("❌ Name cannot be empty!")
+    # 🔹 Name must be non-empty and alphabets
+    name = input("Student Name : ").strip()
+    if not name.isalpha():
+        print("❌ Name must a string!")
         return
 
+    # 🔹 Age must be integer
     age = input("Student Age  : ")
-    course = input("Course       : ")
+    if not age.isdigit():
+        print("❌ Age must be a number!")
+        return
+
+    age = int(age)
+
+    # 🔹 Course must not be empty
+    course = input("Course       : ").strip()
+    if course == "":
+        print("❌ Course cannot be empty!")
+        return
 
     students.append({
         "id": sid,
@@ -50,11 +67,26 @@ def update_student():
     print("\n✏️ UPDATE STUDENT")
     sid = input("Enter Student ID: ")
 
+    if not sid.isdigit():
+        print("❌ Student ID must be an integer!")
+        return
+
+    sid = int(sid)
+
     for s in students:
         if s["id"] == sid:
-            s["name"] = input("New Name   : ")
-            s["age"] = input("New Age    : ")
-            s["course"] = input("New Course : ")
+            name = input("New Name   : ").strip()
+            if name.isalpha():
+                s["name"] = name
+
+            age = input("New Age    : ")
+            if age.isdigit():
+                s["age"] = int(age)
+
+            course = input("New Course : ").strip()
+            if course != "":
+                s["course"] = course
+
             print("✅ Student updated successfully!")
             return
 
@@ -65,6 +97,12 @@ def delete_student():
     print("\n🗑️ DELETE STUDENT")
     sid = input("Enter Student ID: ")
 
+    if not sid.isdigit():
+        print("❌ Student ID must be an integer!")
+        return
+
+    sid = int(sid)
+
     for s in students:
         if s["id"] == sid:
             students.remove(s)
@@ -74,7 +112,7 @@ def delete_student():
     print("❌ Student ID not found.")
 
 
-# MAIN MENU
+# 🔹 MAIN MENU
 while True:
     print("\n" + "=" * 40)
     print("🎓  STUDENT MANAGEMENT SYSTEM  🎓")
@@ -99,4 +137,4 @@ while True:
         print("\n👋 Program exited successfully.")
         break
     else:
-        print("❌Student ID already exists! Please enter a unique ID.")
+        print("❌ Invalid choice! Please enter between 1 and 5.")
