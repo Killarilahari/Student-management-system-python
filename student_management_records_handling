@@ -1,0 +1,341 @@
+import json
+
+students = []
+
+
+# =========================
+# FILE HANDLING FUNCTIONS
+# =========================
+
+def save_data():
+    with open("students.json", "w") as f:
+        json.dump(students, f)
+
+
+def load_data():
+    global students
+
+    try:
+        with open("students.json", "r") as f:
+            students = json.load(f)
+    except FileNotFoundError:
+        students = []
+
+
+# =========================
+# ADD STUDENT
+# =========================
+
+def add_student():
+    print("\n🟢 ADD NEW STUDENT")
+
+    sid = input("Student ID   : ")
+
+    if not sid.isdigit():
+        print("❌ Student ID must be an integer!")
+        return
+
+    sid = int(sid)
+
+    for s in students:
+        if s["id"] == sid:
+            print("❌ Student ID already exists!")
+            return
+
+    name = input("Student Name : ").strip()
+
+    if not name.replace(" ", "").isalpha():
+        print("❌ Name must contain only alphabets!")
+        return
+
+    age = input("Student Age  : ")
+
+    if not age.isdigit():
+        print("❌ Age must be a number!")
+        return
+
+    age = int(age)
+
+    course = input("Course       : ").strip()
+
+    if course == "":
+        print("❌ Course cannot be empty!")
+        return
+
+    students.append({
+        "id": sid,
+        "name": name,
+        "age": age,
+        "course": course
+    })
+
+    save_data()
+
+    print("✅ Student added successfully!")
+
+
+# =========================
+# VIEW STUDENTS
+# =========================
+
+def view_students():
+
+    if not students:
+        print("\n⚠️ No student records available.")
+        return
+
+    print("\n📘 STUDENT RECORDS")
+    print("-" * 60)
+    print(f"{'No':<5}{'ID':<10}{'Name':<20}{'Age':<8}{'Course'}")
+    print("-" * 60)
+
+    for i, s in enumerate(students, start=1):
+        print(f"{i:<5}{s['id']:<10}{s['name']:<20}{s['age']:<8}{s['course']}")
+
+    print("-" * 60)
+
+
+# =========================
+# SEARCH STUDENT
+# =========================
+
+def search_student():
+
+    print("\n🔍 SEARCH STUDENT")
+
+    sid = input("Enter Student ID: ")
+
+    if not sid.isdigit():
+        print("❌ ID must be integer!")
+        return
+
+    sid = int(sid)
+
+    for s in students:
+
+        if s["id"] == sid:
+
+            print("\n✅ Student Found")
+            print(f"ID     : {s['id']}")
+            print(f"Name   : {s['name']}")
+            print(f"Age    : {s['age']}")
+            print(f"Course : {s['course']}")
+
+            return
+
+    print("❌ Student not found.")
+
+
+# =========================
+# UPDATE STUDENT
+# =========================
+
+def update_student():
+
+    print("\n✏️ UPDATE STUDENT")
+
+    sid = input("Enter Student ID: ")
+
+    if not sid.isdigit():
+        print("❌ Student ID must be integer!")
+        return
+
+    sid = int(sid)
+
+    for s in students:
+
+        if s["id"] == sid:
+
+            name = input("New Name   : ").strip()
+
+            if name.replace(" ", "").isalpha():
+                s["name"] = name
+
+            age = input("New Age    : ")
+
+            if age.isdigit():
+                s["age"] = int(age)
+
+            course = input("New Course : ").strip()
+
+            if course != "":
+                s["course"] = course
+
+            save_data()
+
+            print("✅ Student updated successfully!")
+
+            return
+
+    print("❌ Student ID not found.")
+
+
+# =========================
+# DELETE STUDENT
+# =========================
+
+def delete_student():
+
+    print("\n🗑️ DELETE STUDENT")
+
+    sid = input("Enter Student ID: ")
+
+    if not sid.isdigit():
+        print("❌ Student ID must be integer!")
+        return
+
+    sid = int(sid)
+
+    for s in students:
+
+        if s["id"] == sid:
+
+            confirm = input("Are you sure? (yes/no): ")
+
+            if confirm.lower() == "yes":
+                students.remove(s)
+
+                save_data()
+
+                print("✅ Student deleted successfully!")
+
+            else:
+                print("❌ Delete cancelled.")
+
+            return
+
+    print("❌ Student ID not found.")
+
+
+# =========================
+# TOTAL STUDENTS
+# =========================
+
+def total_students():
+
+    print(f"\n📊 Total Students: {len(students)}")
+
+
+# =========================
+# SORT STUDENTS
+# =========================
+
+def sort_students():
+
+    if not students:
+        print("\n⚠️ No records available.")
+        return
+
+    sorted_students = sorted(students, key=lambda x: x["name"])
+
+    print("\n📘 SORTED STUDENTS")
+
+    print("-" * 60)
+
+    for s in sorted_students:
+        print(f"{s['id']} - {s['name']} - {s['course']}")
+
+    print("-" * 60)
+
+
+# =========================
+# FILTER BY COURSE
+# =========================
+
+def filter_by_course():
+
+    course = input("Enter Course Name: ").strip()
+
+    found = False
+
+    print("\n📘 FILTERED STUDENTS")
+
+    for s in students:
+
+        if s["course"].lower() == course.lower():
+
+            print(f"{s['id']} - {s['name']} - {s['course']}")
+
+            found = True
+
+    if not found:
+        print("❌ No students found.")
+
+
+# =========================
+# EXPORT REPORT
+# =========================
+
+def export_data():
+
+    with open("report.txt", "w") as f:
+
+        for s in students:
+            f.write(f"{s}\n")
+
+    print("✅ Data exported to report.txt")
+
+
+# =========================
+# LOAD DATA AT START
+# =========================
+
+load_data()
+
+
+# =========================
+# MAIN MENU
+# =========================
+
+while True:
+
+    print("\n" + "=" * 45)
+    print("🎓 STUDENT RECORD MANAGEMENT SYSTEM 🎓")
+    print("=" * 45)
+
+    print("1. Add Student")
+    print("2. View Students")
+    print("3. Search Student")
+    print("4. Update Student")
+    print("5. Delete Student")
+    print("6. Total Students")
+    print("7. Sort Students")
+    print("8. Filter by Course")
+    print("9. Export Report")
+    print("10. Exit")
+
+    choice = input("👉 Enter your choice (1-10): ")
+
+    if choice == "1":
+        add_student()
+
+    elif choice == "2":
+        view_students()
+
+    elif choice == "3":
+        search_student()
+
+    elif choice == "4":
+        update_student()
+
+    elif choice == "5":
+        delete_student()
+
+    elif choice == "6":
+        total_students()
+
+    elif choice == "7":
+        sort_students()
+
+    elif choice == "8":
+        filter_by_course()
+
+    elif choice == "9":
+        export_data()
+
+    elif choice == "10":
+        print("\n👋 Program exited successfully.")
+        break
+
+    else:
+        print("❌ Invalid choice! Enter between 1 and 10.")
