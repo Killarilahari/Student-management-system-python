@@ -79,16 +79,16 @@ python student_management.py
   👉  Enter your choice (1-7):
 ```
 
-**View Students (sorted by Name):**
+**View Students (sorted by ID):**
 ```
 ══════════════════════════════════════════════════════════════════
   📘  STUDENT RECORDS  [Sorted by Name]
 ══════════════════════════════════════════════════════════════════
   No    ID       Name                 Age    Course
 ──────────────────────────────────────────────────────────────────
-  1     102      Aarav Singh          20     Data Science
-  2     101      Lahari Killari       21     Computer Science
-  3     103      Ravi Kumar           19     Electronics
+  1     101      vinni                21     Data Science
+  2     102      Lahari               20     Computer Science
+  3     103      Meghana              19     Electronics
 ──────────────────────────────────────────────────────────────────
   Total : 3 student(s)
 ```
@@ -97,8 +97,8 @@ python student_management.py
 ```
   Total Students  : 3
   Average Age     : 20.0 years
-  Youngest        : Ravi Kumar (Age 19)
-  Oldest          : Lahari Killari (Age 21)
+  Youngest        : Meghana (Age 19)
+  Oldest          : Vinni (Age 21)
 ──────────────────────────────────────────────────────────────────
   Course                    Students
 ──────────────────────────────────────────────────────────────────
@@ -112,8 +112,6 @@ python student_management.py
 ## 🔧 Tech Stack
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
-![No Libraries](https://img.shields.io/badge/Libraries-None%20Required-brightgreen?style=flat-square)
-
 ---
 
 ## 📚 Concepts Demonstrated
@@ -131,6 +129,9 @@ python student_management.py
 ## 👩‍💻 Author
 
 **Killari Lahari**
+
 B.Tech – Computer Science and Engineering (AI and ML)
+
 📧 laharikillari007@gmail.com
+
 🔗 [LinkedIn](https://linkedin.com/in/lahari-killari-375587324)
